@@ -19,7 +19,7 @@ import java.io.StringReader;
  */
 public class ArgumentFlexibleComponent extends Argument<Component> {
 
-    private static final MiniMessage MINI_MESSAGE = MiniMessage.get();
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private final boolean infinite;
 
@@ -40,7 +40,7 @@ public class ArgumentFlexibleComponent extends Argument<Component> {
                 input = Argument.parse(new ArgumentString(input));
             }
             // Otherwise, parse with MiniMessage
-            return MINI_MESSAGE.parse(input);
+            return MINI_MESSAGE.deserialize(input);
         }
     }
 

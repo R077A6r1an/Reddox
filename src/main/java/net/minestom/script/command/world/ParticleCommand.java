@@ -7,6 +7,7 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.particle.ParticleCreator;
 import net.minestom.server.utils.location.RelativeVec;
+import net.minestom.server.entity.Player;
 
 import static net.minestom.server.command.builder.arguments.ArgumentType.Float;
 import static net.minestom.server.command.builder.arguments.ArgumentType.Integer;
@@ -33,8 +34,8 @@ public class ParticleCommand extends RichCommand {
                             particle, false, position.x(), position.y(), position.z(),
                             (float) delta.x(), (float) delta.y(), (float) delta.z(), speed, count, null);
 
-                    if (sender.isPlayer()) {
-                        sender.asPlayer().sendPacketToViewersAndSelf(particlePacket);
+                    if ((sender instanceof Player)) {
+                        ((Player)sender).sendPacketToViewersAndSelf(particlePacket);
                     }
 
                     sender.sendMessage(Component.text("Particle(s) sent!"));

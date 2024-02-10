@@ -37,7 +37,7 @@ public class GamemodeCommand extends RichCommand {
     }
 
     private void executeOnSelf(CommandSender sender, CommandContext context) {
-        if (!sender.isPlayer()) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Component.text("The command is only available for player", NamedTextColor.RED));
             return;
         }

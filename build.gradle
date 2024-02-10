@@ -21,7 +21,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
-    implementation 'com.github.Minestom:Minestom:bf3ce1dfb0306e50ad563a2df6853a7a2f4c3588'
+    implementation 'com.github.Minestom:Minestom:a01ff09563425d293b3bc0018b9086da8f49fdf6'
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-text
     implementation group: 'org.apache.commons', name: 'commons-text', version: '1.9'

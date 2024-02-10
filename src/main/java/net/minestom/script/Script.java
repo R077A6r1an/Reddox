@@ -104,6 +104,7 @@ public final class Script {
     }
 
     private static Context createContext(String language, GlobalExecutor globalExecutor) {
+        @SuppressWarnings("unchecked")
         HostAccess hostAccess = HostAccess.newBuilder(HostAccess.ALL)
                 // Fix list being sent as map
                 .targetTypeMapping(

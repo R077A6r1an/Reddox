@@ -138,14 +138,14 @@ public class GlobalExecutor implements Executor {
         // Create command
         Command command = new RichCommand(commandName);
         command.addSyntax((sender, context) -> {
-            if (!sender.isPlayer()) {
+            if (!(sender instanceof Player)) {
                 // TODO console support
                 ExceptionUtils.sendMessage(
                         Component.text("Currently only players can use script commands",
                                 NamedTextColor.RED));
                 return;
             }
-            PlayerProperty playerProperty = new PlayerProperty(sender.asPlayer());
+            PlayerProperty playerProperty = new PlayerProperty((Player)sender);
             Properties properties = new Properties();
             for (var entry : context.getMap().entrySet()) {
                 final String key = entry.getKey();

@@ -22,6 +22,7 @@ public class NbtConversionUtils {
         } else if (nbt instanceof NBTString) {
             object = ((NBTString) nbt).getValue();
         } else if (nbt instanceof NBTList) {
+            @SuppressWarnings("unchecked")
             NBTList<NBT> list = (NBTList<NBT>) nbt;
             Value[] array = new Value[list.getSize()];
             for (int i = 0; i < array.length; i++) {
@@ -89,7 +90,9 @@ public class NbtConversionUtils {
         } else if (value instanceof String) {
             return new NBTConverter<>((String) value, NBTType.TAG_String, NBTString::new);
         } else if (value instanceof List) {
-            return new NBTConverter<>((List) value, NBTType.TAG_List, NbtConversionUtils::fromList);
+            @SuppressWarnings("unchecked")
+            var outp = new NBTConverter<>((List) value, NBTType.TAG_List, NbtConversionUtils::fromList);
+            return outp;
         } else if (value instanceof NBTCompound) {
             return new NBTConverter<>((NBTCompound) value, NBTType.TAG_Compound, nbtCompound -> nbtCompound);
         }
@@ -97,8 +100,7 @@ public class NbtConversionUtils {
         throw new IllegalArgumentException("Type " + value.getClass() + " is not an expected nbt value");
     }
 
-    private record NBTConverter<T>(T value, NBTType<?> type,
-                                   Function<T, NBT> converter) {
+    private record NBTConverter<T>(T value, NBTType<?> type, Function<T, NBT> converter) {
         public NBT makeNBT() {
             return converter.apply(value);
         }

@@ -39,11 +39,11 @@ public class EffectCommand extends RichCommand {
             }, Literal("clear"), targetArgument, effectArgument);
 
             addSyntax((sender, context) -> {
-                if (!sender.isPlayer()) {
+                if (!(sender instanceof Player)) {
                     usage(sender, context);
                     return;
                 }
-                final Player player = sender.asPlayer();
+                final Player player = ((Player)sender);
                 player.clearEffects();
                 sender.sendMessage(Component.text("Your effects have been cleared!"));
             }, Literal("clear"));

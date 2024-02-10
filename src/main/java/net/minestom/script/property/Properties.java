@@ -80,7 +80,8 @@ public class Properties implements ProxyObject {
                                                           @NotNull BiConsumer<T, Properties> consumer) {
         var consumers = EXTENSIONS.computeIfAbsent(type,
                 aClass -> new ArrayList<>());
-        consumers.add((BiConsumer<Object, Properties>) consumer);
+        @SuppressWarnings("unchecked")
+        boolean outp = consumers.add((BiConsumer<Object, Properties>) consumer);
     }
 
     public static @NotNull Properties fromEntity(@NotNull Entity entity) {

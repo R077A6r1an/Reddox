@@ -10,14 +10,14 @@ public class ItemProperty extends Properties {
     public ItemProperty(@NotNull ItemStack itemStack) {
         this.itemStack = itemStack;
         Properties.applyExtensions(ItemProperty.class, itemStack, this);
-        putMember("material", itemStack.getMaterial().toString());
-        putMember("amount", itemStack.getAmount());
+        putMember("material", itemStack.material().toString());
+        putMember("amount", itemStack.amount());
     }
 
     @Override
     public String toString() {
-        final String namespace = itemStack.getMaterial().name();
-        final String nbt = itemStack.getMeta().toSNBT();
+        final String namespace = itemStack.material().name();
+        final String nbt = itemStack.meta().toSNBT();
         return namespace + nbt;
     }
 }

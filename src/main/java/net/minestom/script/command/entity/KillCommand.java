@@ -15,11 +15,11 @@ public class KillCommand extends RichCommand {
         super("kill");
 
         setDefaultExecutor((sender, context) -> {
-            if (!sender.isPlayer()) {
+            if (!(sender instanceof Player)) {
                 sender.sendMessage(Component.text("Usage: /kill <targets>"));
                 return;
             }
-            final Player player = sender.asPlayer();
+            final Player player = ((Player)sender);
             player.kill();
         });
 

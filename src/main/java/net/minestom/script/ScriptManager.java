@@ -44,7 +44,7 @@ public final class ScriptManager {
     private static volatile boolean loaded;
 
     private static Function<CommandSender, Collection<Instance>> instanceSupplier = sender ->
-            sender.isPlayer() ? Collections.singleton(sender.asPlayer().getInstance()) :
+            (sender instanceof Player) ? Collections.singleton(((Player)sender).getInstance()) :
                     MinecraftServer.getInstanceManager().getInstances();
     private static Function<EntityType, Entity> entitySupplier = EntityCreature::new;
     private static Function<Player, Boolean> commandPermission = player -> true;

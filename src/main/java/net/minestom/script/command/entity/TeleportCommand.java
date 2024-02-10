@@ -3,6 +3,7 @@ package net.minestom.script.command.entity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.minestom.server.command.ConsoleSender;
 import net.minestom.script.command.RichCommand;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.CommandContext;
@@ -41,7 +42,7 @@ public class TeleportCommand extends RichCommand {
     }
 
     private void usage(CommandSender sender, CommandContext context) {
-        if (sender.isPlayer()) {
+        if (sender instanceof Player) {
             sender.sendMessage(Component.text("Usage: /tp <location>"));
             sender.sendMessage(Component.text("Usage: /tp <destination>"));
         }
@@ -49,7 +50,7 @@ public class TeleportCommand extends RichCommand {
     }
 
     private void selfToEntity(CommandSender sender, CommandContext context) {
-        if (sender.isConsole()) {
+        if (sender instanceof ConsoleSender) {
             usage(sender, context);
             return;
         }
@@ -59,7 +60,7 @@ public class TeleportCommand extends RichCommand {
         List<Entity> entities = entityFinder.find(sender);
 
         if (entities.size() > 0) {
-            teleport(sender.asPlayer(), entities.get(0).getPosition());
+            teleport(((Player)sender), entities.get(0).getPosition());
             sender.sendMessage(Component.text("Teleport to entity"));
         } else {
             sender.sendMessage(Component.text("No destination found", NamedTextColor.RED));
@@ -67,12 +68,12 @@ public class TeleportCommand extends RichCommand {
     }
 
     private void selfToPosition(CommandSender sender, CommandContext context) {
-        if (sender.isConsole()) {
+        if (sender instanceof ConsoleSender) {
             usage(sender, context);
             return;
         }
 
-        Player player = sender.asPlayer();
+        Player player = ((Player)sender);
 
         RelativeVec relativeVec = context.get(location);
         Pos position = relativeVec.from(player).asPosition();
@@ -91,8 +92,8 @@ public class TeleportCommand extends RichCommand {
         if (targetsEntity.size() > 0) {
             targetsEntity.stream()
                     .filter(entity -> !(entity instanceof Player) ||
-                            !sender.isPlayer() ||
-                            !sender.asPlayer().getUuid().equals(entity.getUuid()))
+                            !(sender instanceof Player) ||
+                            !((Player)sender).getUuid().equals(entity.getUuid()))
                     .forEach(entity -> {
                         Pos position = relativeVec.from(entity).asPosition();
                         teleport(entity, position);
@@ -114,8 +115,8 @@ public class TeleportCommand extends RichCommand {
         if (targetsEntity.size() > 0) {
             targetsEntity.stream()
                     .filter(entity -> !(entity instanceof Player) ||
-                            !sender.isPlayer() ||
-                            !sender.asPlayer().getUuid().equals(entity.getUuid()))
+                            !(sender instanceof Player) ||
+                            !((Player)sender).getUuid().equals(entity.getUuid()))
                     .forEach(entity -> {
                         Pos position = relativeVec.from(entity).asPosition().withDirection(relativeDirection.from(entity));
                         teleport(entity, position);
@@ -138,8 +139,8 @@ public class TeleportCommand extends RichCommand {
         if (targetsEntity.size() > 0) {
             targetsEntity.stream()
                     .filter(entity -> !(entity instanceof Player) ||
-                            !sender.isPlayer() ||
-                            !sender.asPlayer().getUuid().equals(entity.getUuid()))
+                            !(sender instanceof Player) ||
+                            !((Player)sender).getUuid().equals(entity.getUuid()))
                     .forEach(entity -> {
                         Pos position = destination.getPosition();
                         teleport(entity, position);
@@ -161,8 +162,8 @@ public class TeleportCommand extends RichCommand {
         if (targetsEntity.size() > 0) {
             targetsEntity.stream()
                     .filter(entity -> !(entity instanceof Player) ||
-                            !sender.isPlayer() ||
-                            !sender.asPlayer().getUuid().equals(entity.getUuid()))
+                            !(sender instanceof Player) ||
+                            !((Player)sender).getUuid().equals(entity.getUuid()))
                     .forEach(entity -> {
                         Pos position = relativeVec.from(entity).asPosition().withDirection(relativeDirection.from(entity));
                         teleport(entity, position);
